@@ -5,12 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Moduleish",
+            "name": "Python: start",
             "type": "python",
             "request": "launch",
             "code": "from webviz_dev_sync import command_line; command_line.main()",
             "args": [
                 "start",
+            ]
+        },
+        {
+            "name": "Python: config",
+            "type": "python",
+            "request": "launch",
+            "code": "from webviz_dev_sync import command_line; command_line.main()",
+            "args": [
+                "config",
             ]
         },
     ]

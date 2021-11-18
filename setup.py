@@ -2,7 +2,6 @@ import os
 import re
 import pathlib
 
-
 from setuptools import setup, find_packages
 
 
@@ -38,9 +37,15 @@ setup(
         ]
     },
     entry_points={
-        "console_scripts": ["webviz-dev-sync=webviz_dev_sync.command_line:main"],
+        "console_scripts": ["webviz-dev=webviz_dev_sync.command_line:main"],
     },
-    install_requires=["gitpython>=3.1.20", "watchdog>=2.1.6", "pyyaml>=6.0.0"],
+    install_requires=[
+        "gitpython>=3.1.20",
+        "watchdog>=2.1.6",
+        "PyGithub>=1.55",
+        "pyyaml>=6.0.0",
+        "jsonschema>=4.2.1",
+    ],
     setup_requires=["setuptools_scm~=3.2"],
     python_requires="~=3.6",
     use_scm_version=True,
