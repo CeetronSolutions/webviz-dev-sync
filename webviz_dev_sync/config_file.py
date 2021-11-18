@@ -18,12 +18,15 @@ class ConfigFile:
 
     def make_default_file(self) -> None:
         self.config_file = {
+            "editor": "default",
+
             "packages": [
                 {
                     "webviz-core-components": {
                         "local": False,
                         "local_path": "",
                         "git_url": "https://github.com/equinor/webviz-core-components.git",
+                        "branch": "origin/master"
                     }
                 },
                 {
@@ -31,6 +34,7 @@ class ConfigFile:
                         "local": False,
                         "local_path": "",
                         "git_url": "https://github.com/equinor/webviz-subsurface-components.git",
+                        "branch": "origin/master"
                     }
                 },
                 {
@@ -38,6 +42,7 @@ class ConfigFile:
                         "local": False,
                         "local_path": "",
                         "git_url": "https://github.com/equinor/webviz-config.git",
+                        "branch": "origin/master"
                     }
                 },
                 {
@@ -45,6 +50,7 @@ class ConfigFile:
                         "local": False,
                         "local_path": "",
                         "git_url": "https://github.com/equinor/webviz-subsurface.git",
+                        "branch": "origin/master"
                     }
                 },
             ]
@@ -63,3 +69,5 @@ class ConfigFile:
         )
 
         return package
+
+    def get_preferred_editor(self) -> str:
