@@ -4,18 +4,27 @@ from git import Repo
 
 from .config_file import ConfigFile
 from .editor import open_editor
-from ._package_manager import PackageManager
-from ._github_manager import GithubManager
+from .packages import WebvizConfig, WebvizCoreComponents, WebvizSubsurface, WebvizSubsurfaceComponents
+from ._cache import Cache
 
 
 def start_webviz_dev_sync(args: argparse.Namespace) -> None:
+    cache = Cache()
     config_file = ConfigFile()
-    if not config_file.check_validity():
-        sys.exit()
+    if config_file.get_last_modified_ms() > cache.get_config_modified_date():
+        cache.store_config_modified_date()
+        if not config_file.check_validity():
+            sys.exit()
 
-    manager = PackageManager("webviz-core-components")
-    github = GithubManager("equinor/webviz-core-components")
-    print(github.get_all_branches())
+    webviz_core_components = WebvizCoreComponents()
+    webviz_subsurface_components = WebvizSubsurfaceComponents
+    webviz_config = WebvizConfig()
+    webviz_subsurface = WebvizSubsurface()
+
+    webviz_config.install()
+    webviz_subsurface.install()
+    webviz_core_components.install()
+    webviz_subsurface_components.install()
 
 
 def open_config(args: argparse.Namespace) -> None:
