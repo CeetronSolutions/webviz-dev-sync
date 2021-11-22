@@ -1,6 +1,6 @@
 import argparse
 
-from webviz_dev_sync.editor import open_editor
+from webviz_dev_sync._editor import open_editor
 
 from .webviz_dev_sync import start_webviz_dev_sync
 from .webviz_dev_sync import open_config

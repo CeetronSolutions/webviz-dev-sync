@@ -3,7 +3,7 @@ import sys
 from subprocess import run
 from typing import List
 
-from .config_file import ConfigFile
+from ._config_file import ConfigFile
 
 
 def open_editor(file_path: str) -> None:

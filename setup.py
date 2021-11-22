@@ -43,7 +43,7 @@ setup(
         "gitpython>=3.1.18",
         "watchdog>=2.1.6",
         "PyGithub>=1.55",
-        "pyyaml>=6.0.0",
+        "pyyaml>=5.4.1",
         "jsonschema>=4.0.0",
     ],
     setup_requires=["setuptools_scm~=3.2"],
