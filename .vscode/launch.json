@@ -14,6 +14,16 @@
             ]
         },
         {
+            "name": "Python: start gui",
+            "type": "python",
+            "request": "launch",
+            "code": "from webviz_dev_sync import command_line; command_line.main()",
+            "args": [
+                "start",
+                "--gui",
+            ]
+        },
+        {
             "name": "Python: config",
             "type": "python",
             "request": "launch",

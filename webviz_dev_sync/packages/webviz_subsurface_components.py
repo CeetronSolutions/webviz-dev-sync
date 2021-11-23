@@ -6,7 +6,7 @@ from .._package_manager import PackageManager
 
 
 class WebvizSubsurfaceComponents(PackageManager):
-    def __init__(self):
+    def __init__(self) -> None:
         PackageManager.__init__(self, "webviz-subsurface-components")
 
     def execute_package_specific_installation_routine(self) -> None:

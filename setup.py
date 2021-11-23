@@ -45,6 +45,7 @@ setup(
         "PyGithub>=1.55",
         "pyyaml>=5.4.1",
         "jsonschema>=4.0.0",
+        "pysimplegui>=4.55.1"
     ],
     setup_requires=["setuptools_scm~=3.2"],
     python_requires="~=3.6",

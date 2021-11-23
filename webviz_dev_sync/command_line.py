@@ -1,10 +1,7 @@
 import argparse
 
-from webviz_dev_sync._editor import open_editor
-
 from .webviz_dev_sync import start_webviz_dev_sync
 from .webviz_dev_sync import open_config
-from .webviz_dev_sync import print_config
 
 
 def main() -> None:
@@ -21,6 +18,12 @@ def main() -> None:
 
     parser_start = subparsers.add_parser(
         "start", help="Start the Webviz development syncer tool"
+    )
+
+    parser_start.add_argument(
+        "--gui",
+        action="store_true",
+        help="Starts the Webviz development tool as a GUI app",
     )
 
     parser_start.set_defaults(func=start_webviz_dev_sync)

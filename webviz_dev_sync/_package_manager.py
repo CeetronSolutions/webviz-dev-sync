@@ -93,3 +93,23 @@ class PackageManager:
         if self._cache.get_package_build_timestamp(self._name, self.is_local_package()) < self.get_build_timestamp():
             self.execute_package_specific_build_routine()
             self._cache.store_package_built_timestamp(self._name, self.is_local_package())
+
+    def is_linked(self) -> bool:
+        linked_packages = subprocess.check_output(["npm", "ls", "-g", "--depth=0", "--link=true"], cwd=self._path)
+        path = str(self._path)[0:len(str(self._path)) - 1] if  str(self._path)[len(str(self._path)) - 1] == "/" else str(self._path)
+        return path in str(linked_packages)
+
+    def is_linked_to(self, other_package: str, other_package_path: str = "") -> bool:
+        packages = subprocess.check_output(["npm", "list"], cwd=os.path.join(self._path, "react"))
+        path = other_package_path[0:len(other_package_path) - 1] if  other_package_path[len(other_package_path) - 1] == "/" else other_package_path
+        for line in str(packages).split("\\n"):
+            if other_package in line and (path in line or other_package_path == ""):
+                return True
+        return False
+
+    def shall_be_linked(self) -> bool:
+        return not ("link_package" in self._config and self._config["link_package"] == False)
+
+    @property
+    def path(self):
+        return self._path

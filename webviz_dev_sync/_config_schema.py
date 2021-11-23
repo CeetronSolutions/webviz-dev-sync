@@ -64,8 +64,9 @@ def create_schema(github_access_token: str) -> dict:
                                     "required": ["github_branch"]
                                 }
                             ],
-                            "additionalProperties": False,
+                            "additionalProperties": True,
                             "properties": {
+                                "link_package": { "type": "boolean" },
                                 "local_path": {"type": "string"},
                                 "github_branch": {
                                     "type": "object",
