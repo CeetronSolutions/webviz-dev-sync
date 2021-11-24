@@ -62,10 +62,11 @@ def open_config_editor() -> None:
 def start_webviz_dev_sync(args: argparse.Namespace) -> None:
 
     if args.gui:
-        import PySimpleGUI as sg
-        from PIL import Image, ImageDraw
         import io
         from concurrent.futures import ProcessPoolExecutor
+
+        import PySimpleGUI as sg
+        from PIL import Image, ImageDraw
 
         win = sg.Window("Webviz Dev Syncer")
 
