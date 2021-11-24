@@ -1,7 +1,6 @@
 from typing import Tuple
 import argparse
 import sys
-from concurrent.futures import ProcessPoolExecutor
 
 from ._config_file import ConfigFile
 from ._editor import open_editor
@@ -66,6 +65,7 @@ def start_webviz_dev_sync(args: argparse.Namespace) -> None:
         import PySimpleGUI as sg
         from PIL import Image, ImageDraw
         import io
+        from concurrent.futures import ProcessPoolExecutor
 
         win = sg.Window("Webviz Dev Syncer")
 
