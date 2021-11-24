@@ -111,7 +111,7 @@ def start_webviz_dev_sync(args: argparse.Namespace) -> None:
                     tray.notify(
                         "Started syncing",
                         "Started syncing of all your webviz packages.",
-                        icon="pending.png",
+                        icon="assets/pending.png",
                     )
             elif future.done():
                 if future.result()[0]:
@@ -120,7 +120,7 @@ def start_webviz_dev_sync(args: argparse.Namespace) -> None:
                     tray.update(data_base64=img_byte_array.getvalue())
                     tray.notify(
                         "Syncing successful",
-                        "All packages synced, ready to code :-)",
+                        "All packages are synced. Happy coding! :-)",
                     )
                 else:
                     img_byte_array = io.BytesIO()
@@ -128,9 +128,9 @@ def start_webviz_dev_sync(args: argparse.Namespace) -> None:
                     tray.update(data_base64=img_byte_array.getvalue())
                     tray.notify(
                         "Syncing failed",
-                        "Make sure your config file is valid. Exception: \n"
+                        "Please make sure your config file is valid. Exception: \n"
                         + future.result()[1],
-                        icon="error.png",
+                        icon="assets/error.png",
                     )
 
                 future = None
