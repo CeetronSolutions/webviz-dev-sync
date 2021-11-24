@@ -42,6 +42,7 @@ setup(
     install_requires=[
         "gitpython>=3.1.18",
         "jsonschema>=4.0.0",
+        "Pillow>=7.0.0",
         "PyGithub>=1.55",
         "pysimplegui>=4.55.1",
         "pyyaml>=5.4.1",
