@@ -25,13 +25,11 @@ class ConfigFile:
             return False
 
         try:
-            validate(self._config_file, create_schema(
-                self.get_github_access_token()))
+            validate(self._config_file, create_schema(self.get_github_access_token()))
             return True
         except ValidationError as e:
             print(
-                "Config file is invalid. Please fix the following errors: \n"
-                + str(e)
+                "Config file is invalid. Please fix the following errors: \n" + str(e)
             )
 
         return False
