@@ -1,6 +1,7 @@
 from typing import Tuple
 import argparse
 import sys
+from pathlib import Path
 
 from ._config_file import ConfigFile
 from ._editor import open_editor
@@ -12,9 +13,16 @@ from .packages import (
 )
 from ._cache import Cache
 
+from ._user_data_dir import user_data_dir
+
+from ._log import log_message
+
 
 def run() -> Tuple[bool, str]:
     try:
+        with open(Path.joinpath(user_data_dir(), ".build.log"), "w") as log_file:
+            log_file.write("")
+            
         cache = Cache()
         config_file = ConfigFile()
         if config_file.get_last_modified_ms() > cache.get_config_modified_timestamp():
@@ -51,12 +59,17 @@ def run() -> Tuple[bool, str]:
         webviz_subsurface_components.build()
         return (True, "")
     except Exception as e:
+        log_message(str(e))
         return (False, str(e))
 
 
 def open_config_editor() -> None:
     config_file = ConfigFile()
     open_editor(config_file.get_path())
+
+def open_build_log() -> None:
+    build_log_file = Path.joinpath(user_data_dir(), ".build.log")
+    open_editor(build_log_file)
 
 
 def start_webviz_dev_sync(args: argparse.Namespace) -> None:
@@ -85,10 +98,10 @@ def start_webviz_dev_sync(args: argparse.Namespace) -> None:
         def create_image_failed() -> Image:
             image = Image.new("RGB", (32, 32), (255, 255, 255))
             dc = ImageDraw.Draw(image)
-            dc.rectangle((0, 0, 32, 32), fill="red", outline="red")
+            dc.rectangle((0, 0, 32, 32), fill="#D50000", outline="#D50000")
             return image
 
-        menu = ["BLANK", ["&Start", "---", "&Edit Config", "---", "E&xit"]]
+        menu = ["BLANK", ["&Start", "---", "&Edit Config", "Show &build log", "---", "E&xit"]]
 
         img_byte_array = io.BytesIO()
         create_image_finished().save(img_byte_array, format="PNG")
@@ -104,6 +117,8 @@ def start_webviz_dev_sync(args: argparse.Namespace) -> None:
                     break
                 elif menu_item == "Edit Config":
                     open_config_editor()
+                elif menu_item == "Show build log":
+                    open_build_log()
                 elif menu_item == "Start":
                     img_byte_array = io.BytesIO()
                     create_image_busy().save(img_byte_array, format="PNG")
@@ -129,9 +144,10 @@ def start_webviz_dev_sync(args: argparse.Namespace) -> None:
                     tray.update(data_base64=img_byte_array.getvalue())
                     tray.notify(
                         "Syncing failed",
-                        "Please make sure your config file is valid. Exception: \n"
+                        "Exception: \n"
                         + future.result()[1],
                         icon="assets/error.png",
+
                     )
 
                 future = None

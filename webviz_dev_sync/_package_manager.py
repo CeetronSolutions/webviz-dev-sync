@@ -11,6 +11,9 @@ from ._config_file import ConfigFile
 from ._github_manager import GithubManager
 from ._cache import Cache
 
+from ._exec import exec
+from ._log import log_message
+
 
 class PackageManager:
     def __init__(self, name: str) -> None:
@@ -82,9 +85,10 @@ class PackageManager:
         if self._cache.get_package_modified_timestamp(
             self._name, self.is_local_package()
         ) < os.path.getmtime(self._path):
-            print(f"Installing '{self._name}'...")
+            log_message(f"Installing '{self._name}'...")
             if sys.platform.startswith("win"):
-                check_call(["npm", "config", "set", "script-shell", "powershell"])
+                exec(["npm", "config", "set", "script-shell", "powershell"], shell=True, cwd=self._path)
+                log_message("Successfully set npm script-shell to powershell.")
             self.execute_package_specific_installation_routine()
             self._cache.store_package_modified_timestamp(
                 self._name, self.is_local_package()
@@ -111,7 +115,7 @@ class PackageManager:
 
     def is_linked(self) -> bool:
         linked_packages = check_output(
-            ["npm", "ls", "-g", "--depth=0", "--link=true"], cwd=self._path
+            ["npm", "ls", "-g", "--depth=0", "--link=true"], cwd=self._path, shell=True,
         )
         path = (
             str(self._path)[0 : len(str(self._path)) - 1]
@@ -125,6 +129,7 @@ class PackageManager:
             ["npm", "list"],
             cwd=os.path.join(self._path, "react"),
             stdout=PIPE,
+            shell=True,
         ).stdout
         path = (
             other_package_path[0 : len(other_package_path) - 1]
