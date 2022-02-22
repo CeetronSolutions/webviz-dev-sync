@@ -61,6 +61,7 @@ def run() -> Tuple[bool, str]:
                 webviz_subsurface_components.install()
 
         webviz_subsurface_components.build()
+        log_message(f"Sync process complete! Happy coding! =)")
         return (True, "")
     except Exception as e:
         log_message(str(e))

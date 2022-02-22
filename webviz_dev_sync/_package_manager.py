@@ -12,7 +12,6 @@ from ._cache import Cache
 
 from ._exec import exec, check_output
 from ._log import log_message
-from ._utils import print_progress_bar
 
 
 class PackageManager:
@@ -27,9 +26,11 @@ class PackageManager:
         if not self._config:
             return
 
+        log_message(f"Initializing '{self._name}'...")
         if self.is_local_package():
             self._path = self._config["local_path"]
         else:
+            log_message(f"Checking out Git repository from '{self._config['github_branch']['repository']}'...")
             self._path = pathlib.Path.joinpath(
                 ConfigFile().get_repo_storage_directory(), self._name
             )
@@ -39,6 +40,7 @@ class PackageManager:
             self._github_manager = GithubManager(ConfigFile().get_github_access_token())
 
             self.checkout()
+            log_message(f"Checkout complete.")
 
     def checkout(self) -> None:
         if self._github_manager and self._path:
@@ -108,6 +110,7 @@ class PackageManager:
             self._cache.get_package_build_timestamp(self._name, self.is_local_package())
             < self.get_build_timestamp()
         ):
+            log_message(f"Building '{self._name}'...")
             self.execute_package_specific_build_routine()
             self._cache.store_package_built_timestamp(
                 self._name, self.is_local_package()
