@@ -1,6 +1,7 @@
 from typing import Tuple
 import argparse
 import sys
+import os
 from pathlib import Path
 
 from ._config_file import ConfigFile
@@ -20,6 +21,9 @@ from ._log import log_message
 
 def run() -> Tuple[bool, str]:
     try:
+        # Make sure directory exists
+        os.makedirs(user_data_dir(), exist_ok=True)
+
         with open(Path.joinpath(user_data_dir(), ".build.log"), "w") as log_file:
             log_file.write("")
             
@@ -127,7 +131,7 @@ def start_webviz_dev_sync(args: argparse.Namespace) -> None:
                     tray.notify(
                         "Started syncing",
                         "Started syncing of all your webviz packages.",
-                        icon="assets/pending.png",
+                        icon=Path.joinpath(Path(__file__).parent, "assets/pending.png"),
                     )
             elif future.done():
                 if future.result()[0]:
@@ -146,7 +150,7 @@ def start_webviz_dev_sync(args: argparse.Namespace) -> None:
                         "Syncing failed",
                         "Exception: \n"
                         + future.result()[1],
-                        icon="assets/error.png",
+                        icon=Path.joinpath(Path(__file__).parent, "assets/error.png"),
 
                     )
 

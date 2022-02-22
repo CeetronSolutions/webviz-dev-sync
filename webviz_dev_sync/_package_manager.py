@@ -2,7 +2,6 @@ from typing import Optional
 import pathlib
 import os
 import sys
-from subprocess import run, PIPE, check_call, check_output
 
 from git import Repo, Remote
 from git.exc import InvalidGitRepositoryError
@@ -11,8 +10,9 @@ from ._config_file import ConfigFile
 from ._github_manager import GithubManager
 from ._cache import Cache
 
-from ._exec import exec
+from ._exec import exec, check_output
 from ._log import log_message
+from ._utils import print_progress_bar
 
 
 class PackageManager:
@@ -125,12 +125,10 @@ class PackageManager:
         return path in str(linked_packages)
 
     def is_linked_to(self, other_package: str, other_package_path: str = "") -> bool:
-        packages = run(
-            ["npm", "list"],
+        packages = check_output(["npm", "list"],
             cwd=os.path.join(self._path, "react"),
-            stdout=PIPE,
             shell=True,
-        ).stdout
+        )
         path = (
             other_package_path[0 : len(other_package_path) - 1]
             if other_package_path[len(other_package_path) - 1] == "/"
