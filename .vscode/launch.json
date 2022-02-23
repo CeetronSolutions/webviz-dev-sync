@@ -29,5 +29,14 @@
                 "config",
             ]
         },
+        {
+            "name": "Python: log",
+            "type": "python",
+            "request": "launch",
+            "code": "from webviz_dev_sync import command_line; command_line.main()",
+            "args": [
+                "log",
+            ]
+        },
     ]
 }

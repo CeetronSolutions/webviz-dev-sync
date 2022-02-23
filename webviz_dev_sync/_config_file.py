@@ -77,7 +77,7 @@ class ConfigFile:
         return os.path.getmtime(self._config_file_path)
 
     def get_path(self) -> str:
-        return self._config_file_path
+        return str(self._config_file_path)
 
     def get_repo_storage_directory(self) -> Optional[Path]:
         if not self._config_file or "repo-storage-directory" not in self._config_file:
@@ -91,9 +91,9 @@ class ConfigFile:
 
         return Path(self._config_file["repo-storage-directory"])
 
-    def get_github_access_token(self) -> Optional[Path]:
+    def get_github_access_token(self) -> str:
         if not self._config_file or "github-access-token" not in self._config_file:
-            return None
+            return ""
 
         return self._config_file["github-access-token"]
 
