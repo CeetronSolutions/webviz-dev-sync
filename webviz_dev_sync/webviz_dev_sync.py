@@ -4,7 +4,7 @@ import sys
 import os
 from pathlib import Path
 import shutil
-from pip._internal.utils.misc import get_distribution
+from pkg_resources import get_distribution
 
 from github import BadCredentialsException
 
