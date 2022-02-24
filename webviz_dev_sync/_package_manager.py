@@ -2,6 +2,7 @@ from typing import Optional
 import pathlib
 import os
 import sys
+from pkg_resources import get_distribution, Distribution
 
 from git import Repo, Remote
 from git.exc import InvalidGitRepositoryError
@@ -12,6 +13,14 @@ from ._cache import Cache
 
 from ._exec import exec, check_output
 from ._log import log_message
+
+def get_dist_egg_link(dist: Distribution) -> Optional[str]:
+    """Is distribution an editable install?"""
+    for path_item in sys.path:
+        egg_link = os.path.join(path_item, dist.project_name + '.egg-link')
+        if os.path.isfile(egg_link):
+            egg_link
+    return None
 
 
 class MissingPackageInConfigFile(Exception):
@@ -108,6 +117,14 @@ class PackageManager:
                     cwd=self._path,
                 )
                 log_message("Successfully set npm script-shell to powershell.")
+            dist = get_distribution(self._name)
+            if dist:
+                egg_link = get_dist_egg_link(dist)
+                if egg_link:
+                    log_message("Removing egg link...")
+                    os.remove(egg_link)
+                    log_message("\u2713 Removed")
+                
             self.execute_package_specific_installation_routine()
             self._cache.store_package_modified_timestamp(
                 self._name, self.is_local_package()

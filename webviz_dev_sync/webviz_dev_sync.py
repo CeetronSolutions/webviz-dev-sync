@@ -26,8 +26,11 @@ from ._exec import exec
 
 from ._package_manager import MissingPackageInConfigFile
 
+from ._app_info import print_logo_and_version
 
 def run() -> Tuple[bool, str]:
+    print_logo_and_version()
+
     try:
         # Make sure directory exists
         os.makedirs(user_data_dir(), exist_ok=True)
@@ -100,6 +103,10 @@ def open_config_editor() -> None:
 
 def open_build_log_editor() -> None:
     build_log_file = Path.joinpath(user_data_dir(), ".build.log")
+    if not build_log_file.exists():
+        print("No log file has been written yet. Are you sure you have already started a syncing process?")
+        exit()
+
     open_editor(str(build_log_file))
 
 
@@ -201,6 +208,8 @@ def open_build_log(args: argparse.Namespace) -> None:
 
 
 def clean(args: argparse.Namespace) -> None:
+    print_logo_and_version()
+    
     repos = [
         "webviz-core-components",
         "webviz-config",
