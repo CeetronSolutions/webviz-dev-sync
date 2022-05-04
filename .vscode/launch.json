@@ -1,0 +1,42 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: start",
+            "type": "python",
+            "request": "launch",
+            "code": "from webviz_dev_sync import command_line; command_line.main()",
+            "args": [
+                "start",
+            ]
+        },
+        {
+            "name": "Python: start gui",
+            "type": "python",
+            "request": "launch",
+            "code": "from webviz_dev_sync import command_line; command_line.main()",
+            "args": [
+                "start",
+                "--gui",
+            ]
+        },
+        {
+            "name": "Python: config",
+            "type": "python",
+            "request": "launch",
+            "code": "from webviz_dev_sync import command_line; command_line.main()",
+            "args": [
+                "config",
+            ]
+        },
+        {
+            "name": "Python: log",
+            "type": "python",
+            "request": "launch",
+            "code": "from webviz_dev_sync import command_line; command_line.main()",
+            "args": [
+                "log",
+            ]
+        },
+    ]
+}
